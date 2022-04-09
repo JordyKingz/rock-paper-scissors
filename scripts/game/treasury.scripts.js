@@ -1,0 +1,14 @@
+const fetch = require("node-fetch");
+const {assert} = require("chai");
+const treasuryContract = artifacts.require("Treasury");
+
+module.exports = function(callback) {
+    (async () => {
+        const contractInstance = await treasuryContract.deployed();
+        const accounts = await web3.eth.getAccounts()
+        const owner = accounts[0]
+        await contractInstance.SetTreasuryBalanceToDefault({from: owner});
+        console.log('Treasury balance set to default');
+        callback();
+    })();
+}
